@@ -35,3 +35,11 @@ npm run dev
 yarn
 yarn dev
 ```
+
+## TypeORM
+
+Install typeorm globally `npm i -g typeorm`
+
+### Generate migrations migrations
+
+- `$ NAME={migration name} npm run migration:generate`

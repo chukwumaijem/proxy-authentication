@@ -3,7 +3,8 @@ import 'reflect-metadata';
 import express from 'express';
 import next from 'next';
 import { buildSchema } from 'type-graphql';
-const graphqlHTTP = require('express-graphql');
+import graphqlHTTP from 'express-graphql';
+import { createConnection } from "typeorm";
 
 import envs from './config/';
 
@@ -13,6 +14,8 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(async () => {
   const server = express();
+  const connection = await createConnection();
+  await connection.runMigrations();
   const schema = await buildSchema({
     resolvers: [__dirname + '/**/*.resolver.{ts,js}']
   });

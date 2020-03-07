@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "nodemon",
     "build": "next build && tsc --project tsconfig.server.json",
-    "start": "cross-env NODE_ENV=production node dist/index.js"
+    "start": "cross-env NODE_ENV=production node dist/index.js",
+    "migration:generate": "ts-node --project tsconfig.server.json node_modules/.bin/typeorm migration:generate -n $NAME"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.0",
