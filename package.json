@@ -10,7 +10,7 @@
     "migration:run": "yarn run typeorm migration:run",
     "migration:revert": "yarn run typeorm migration:revert",
     "typeorm": "ts-node --project tsconfig.server.json $(npm bin)/typeorm",
-    "prettier": "prettier --write 'src/**/*.{js,jsx,js}'"
+    "prettier": "prettier --write 'src/**/*.{ts,tsx,js}'"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.0",

@@ -19,7 +19,7 @@ app.prepare().then(async () => {
     const connection = await createConnection();
     await connection.runMigrations();
     const schema = await buildSchema({
-      resolvers: [__dirname + '/**/*.resolver.ts']
+      resolvers: [__dirname + '/**/*.resolver.ts'],
     });
 
     const server = express();
@@ -28,7 +28,7 @@ app.prepare().then(async () => {
       '/graphql',
       graphqlHTTP({
         schema,
-        graphiql: !envs.isProduction
+        graphiql: !envs.isProduction,
       })
     );
 

@@ -4,9 +4,9 @@ import {
   Column,
   BaseEntity,
   CreateDateColumn,
-  UpdateDateColumn
-} from "typeorm";
-import { ObjectType, Field, ID } from "type-graphql";
+  UpdateDateColumn,
+} from 'typeorm';
+import { ObjectType, Field, ID } from 'type-graphql';
 
 @ObjectType()
 @Entity()
