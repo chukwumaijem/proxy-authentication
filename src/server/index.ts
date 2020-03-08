@@ -6,7 +6,7 @@ import { buildSchema } from 'type-graphql';
 import graphqlHTTP from 'express-graphql';
 import { createConnection } from 'typeorm';
 
-import envs from './config/';
+import envs from './config';
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });

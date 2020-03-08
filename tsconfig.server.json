@@ -4,10 +4,9 @@
     "target": "es2016",
     "module": "commonjs",
     "outDir": "dist",
-    "isolatedModules": false,
     "noEmit": false,
     "strictPropertyInitialization": false,
     "lib": ["dom", "es2016", "esnext.asynciterable"]
   },
-  "include": ["server/**/*.ts"]
+  "include": ["src/server/**/*.ts"]
 }

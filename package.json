@@ -5,7 +5,11 @@
     "dev": "nodemon",
     "build": "next build && tsc --project tsconfig.server.json",
     "start": "cross-env NODE_ENV=production node dist/index.js",
-    "migration:generate": "ts-node --project tsconfig.server.json node_modules/.bin/typeorm migration:generate -n $NAME"
+    "migration:generate": "yarn typeorm migration:generate  -n",
+    "migration:create": "yarn run typeorm migration:create -n",
+    "migration:run": "yarn run typeorm migration:run",
+    "migration:revert": "yarn run typeorm migration:revert",
+    "typeorm": "ts-node --project tsconfig.server.json $(npm bin)/typeorm"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.0",
@@ -33,6 +37,9 @@
     "@types/react-dom": "16.8.4",
     "nodemon": "^1.19.0",
     "ts-node": "^8.1.0",
-    "typescript": "^3.4.5"
+    "typescript": "^3.8.3"
+  },
+  "engines": {
+    "node": ">=12.16.1"
   }
 }
