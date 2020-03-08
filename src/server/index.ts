@@ -35,7 +35,7 @@ app.prepare().then(async () => {
 
     server.listen(envs.PORT, (err: any) => {
       if (err) throw err;
-      console.log(`${envs.NODE_ENV} Ready on http://localhost:${envs.PORT}`);
+      console.log(`${envs.NODE_ENV} server is ready on http://localhost:${envs.PORT}`);
     });
   } catch (error) {
     throw new Error(error);

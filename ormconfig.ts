@@ -7,7 +7,7 @@
   migrations: ['src/server/migrations/**/*.ts'],
   subscribers: ['src/server/subscriber/**/*.ts'],
   cli: {
-    entitiesDir: 'src/server/entity',
+    entitiesDir: 'src/server/entities',
     migrationsDir: 'src/server/migrations',
     subscribersDir: 'src/server/subscriber'
   }

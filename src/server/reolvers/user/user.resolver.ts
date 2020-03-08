@@ -1,6 +1,6 @@
 import { Resolver, Arg, Query, Mutation, Args } from 'type-graphql';
-import { User } from '../entities/User';
-import { UserInputType } from './user.type';
+import { User } from '../../entities';
+import { UserArgsType } from '../../types';
 
 @Resolver()
 export class UserResolver {
@@ -10,7 +10,7 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
-  addUser(@Args() userData: UserInputType): Promise<User> {
+  addUser(@Args() userData: UserArgsType): Promise<User> {
     try {
       const user = User.create({ ...userData });
 

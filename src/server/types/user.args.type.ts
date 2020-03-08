@@ -2,7 +2,7 @@ import { ArgsType, Field } from 'type-graphql';
 import { Min, Max, MaxLength } from 'class-validator';
 
 @ArgsType()
-export class UserInputType {
+export class UserArgsType {
   @Field()
   @MaxLength(15)
   first_name: string;
