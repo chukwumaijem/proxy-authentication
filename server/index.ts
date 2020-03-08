@@ -1,10 +1,10 @@
 import 'dotenv/config';
 import 'reflect-metadata';
-import express from 'express';
 import next from 'next';
 import { buildSchema } from 'type-graphql';
 import graphqlHTTP from 'express-graphql';
-import { createConnection } from "typeorm";
+import { createConnection } from 'typeorm';
+import express from 'express';
 
 import envs from './config/';
 
@@ -12,8 +12,8 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+const server = express();
 app.prepare().then(async () => {
-  const server = express();
   const connection = await createConnection();
   await connection.runMigrations();
   const schema = await buildSchema({
