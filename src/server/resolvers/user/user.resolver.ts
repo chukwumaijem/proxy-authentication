@@ -12,9 +12,9 @@ export class UserResolver {
   @Mutation(() => User)
   addUser(@Args() userData: UserArgsType): Promise<User> {
     try {
-      const user = User.create({ ...userData });
+      const user = User.create({ ...userData }).save();
 
-      return user.save();
+      return user;
     } catch (error) {
       throw new Error(error);
     }
@@ -22,7 +22,7 @@ export class UserResolver {
 
   @Query(() => User)
   async getUser(
-    @Arg('id', () => Int) userId: number
+    @Arg('userId', () => Int) userId: number
   ): Promise<User | undefined> {
     try {
       const user = await User.findOne(userId);
