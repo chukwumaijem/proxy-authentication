@@ -1,5 +1,23 @@
 version: '3'
 services:
+  app:
+    container_name: app
+    ports:
+      - '7000:7000'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DATABASE_URL=postgres://postgres:test@db.local:5432/auth-proxy
+      - PORT=7000
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - db
+    links:
+      - db:db.local
   db:
     image: postgres:11.5
     volumes:
@@ -17,3 +35,4 @@ services:
       interval: 5s
       retries: 5
       timeout: 20s
+ 
