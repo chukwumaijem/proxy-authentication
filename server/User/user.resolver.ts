@@ -21,7 +21,7 @@ export class UserResolver {
   }
 
   @Query(() => User)
-  async getUser(@Arg('id') userId: string): Promise<User | undefined> {
+  async getUser(@Arg('id') userId: number): Promise<User | undefined> {
     try {
       const user = await User.findOne(userId);
 
@@ -31,7 +31,7 @@ export class UserResolver {
     }
   }
 
-  @Query(() => User)
+  @Query(() => [User])
   async getUsers(): Promise<User[]> {
     try {
       const users = await User.find();
