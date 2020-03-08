@@ -5,7 +5,9 @@ import next from 'next';
 import { buildSchema } from 'type-graphql';
 import graphqlHTTP from 'express-graphql';
 import { createConnection } from 'typeorm';
+import morgan from 'morgan';
 
+import { logger } from './utilities';
 import envs from './config';
 
 const dev = process.env.NODE_ENV !== 'production';
@@ -21,6 +23,7 @@ app.prepare().then(async () => {
     });
 
     const server = express();
+    server.use(morgan('combined'));
     server.use(
       '/graphql',
       graphqlHTTP({
@@ -35,7 +38,9 @@ app.prepare().then(async () => {
 
     server.listen(envs.PORT, (err: any) => {
       if (err) throw err;
-      console.log(`${envs.NODE_ENV} server is ready on http://localhost:${envs.PORT}`);
+      logger.info(
+        `${envs.NODE_ENV} server is ready on http://localhost:${envs.PORT}`
+      );
     });
   } catch (error) {
     throw new Error(error);
