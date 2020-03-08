@@ -1,37 +1,57 @@
 # Custom server with TypeScript + Nodemon example
 
-The example shows how you can use [TypeScript](https://typescriptlang.com) on both the server and the client while using [Nodemon](https://nodemon.io/) to live reload the server code without affecting the Next.js universal code.
+Technologies:
+- TypeGraphQL
+- TypeORM
+- NextJS
 
-Server entry point is `server/index.ts` in development and `dist/index.js` in production.
-The second directory should be added to `.gitignore`.
+## Docker Setup:
+run `docker-compose up` to start up a DB instance
 
-## How to use
 
-### Using `create-next-app`
-
-Execute [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
-```bash
-npm init next-app --example custom-server-typescript custom-server-typescript-app
-# or
-yarn create next-app --example custom-server-typescript custom-server-typescript-app
-```
-
-### Download manually
-
-Download the example:
+# Install it and run:
 
 ```bash
-curl https://codeload.github.com/zeit/next.js/tar.gz/canary | tar -xz --strip=2 next.js-canary/examples/custom-server-typescript
-cd custom-server-typescript
-```
-
-Install it and run:
-
-```bash
-npm install
-npm run dev
-# or
+cp .env.example .env
 yarn
 yarn dev
 ```
+
+Note: You need to ensure your node version matches what's in `.nvmrc`. Or run `nvm use` to use the version
+
+# Migrations:
+1- Make the specific schema changes in `./src/entities` folder
+
+2- Make sure that database schema is identical to staging. If its not, follow the above section to reset to the local database.
+
+3- Make sure that your local `.env` file is pointing to the local docker compose db container. IF not sure, run the following:
+
+
+4- Generate the migration by running the following, and replace `NAME_OF_MIGRATION` with the correct name
+
+``` 
+yarn run migration:generate NAME_OF_MIGRATION
+```
+
+This will generate a new file in `src/migrations` folder.
+
+5- Run the migration on local database to test. To do that, run:
+
+``` 
+yarn run migration:run
+```
+
+Then look at database through a PostgreSQL viewer and Hasura console to make sure that is the right change. If it looks its not correct, then revert the migration locally
+
+``` 
+yarn run migration:revert
+```
+
+Then remote the generated migration files by doing:
+
+``` 
+rm -rf src/migrations/NAME_OF_MIGRATION_FILE.ts
+```
+
+Then generate a new migration file again by following the instructions above again until the migration looks perfect.
+
