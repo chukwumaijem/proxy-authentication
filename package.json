@@ -1,6 +1,6 @@
 {
-  "name": "custom-server-typescript",
-  "version": "1.0.0",
+  "name": "auth-proxy",
+  "version": "0.1.0",
   "scripts": {
     "dev": "nodemon",
     "build": "next build && tsc --project tsconfig.server.json",
@@ -9,7 +9,8 @@
     "migration:create": "yarn run typeorm migration:create -n",
     "migration:run": "yarn run typeorm migration:run",
     "migration:revert": "yarn run typeorm migration:revert",
-    "typeorm": "ts-node --project tsconfig.server.json $(npm bin)/typeorm"
+    "typeorm": "ts-node --project tsconfig.server.json $(npm bin)/typeorm",
+    "prettier": "prettier --write 'src/**/*.{ts,tsx,js}'"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.0",
@@ -35,12 +36,26 @@
     "@types/graphql": "^14.5.0",
     "@types/hapi__joi": "^16.0.12",
     "@types/lodash": "^4.14.149",
+    "@types/morgan": "^1.9.0",
     "@types/node": "^12.12.29",
     "@types/react": "^16.8.17",
     "@types/react-dom": "16.8.4",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.8",
     "nodemon": "^1.19.0",
+    "prettier": "^1.19.1",
     "ts-node": "^8.1.0",
     "typescript": "^3.8.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{ts,js,tsx}": [
+      "yarn run prettier"
+    ]
   },
   "engines": {
     "node": ">=12.16.1"

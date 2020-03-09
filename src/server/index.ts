@@ -30,7 +30,7 @@ app.prepare().then(async () => {
       '/graphql',
       graphqlHTTP({
         schema,
-        graphiql: !envs.isProduction
+        graphiql: !envs.isProduction,
       })
     );
 

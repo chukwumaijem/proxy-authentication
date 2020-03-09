@@ -1,4 +1,4 @@
-import { Resolver, Arg, Query, Mutation, Args } from 'type-graphql';
+import { Resolver, Arg, Query, Mutation, Args, Int } from 'type-graphql';
 import { Service } from 'typedi';
 
 import { User } from '../../entities';
@@ -21,7 +21,9 @@ export class UserResolver {
   }
 
   @Query(() => User)
-  async getUser(@Arg('id') userId: number): Promise<User | undefined> {
+  async getUser(
+    @Arg('userId', () => Int) userId: number
+  ): Promise<User | undefined> {
     return this.userService.getUser(userId);
   }
 
