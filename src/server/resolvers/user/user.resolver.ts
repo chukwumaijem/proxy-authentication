@@ -1,4 +1,4 @@
-import { Resolver, Arg, Query, Mutation, Args } from 'type-graphql';
+import { Resolver, Arg, Query, Mutation, Args, Int } from 'type-graphql';
 import { User } from '../../entities';
 import { UserArgsType } from '../../types';
 
@@ -12,16 +12,18 @@ export class UserResolver {
   @Mutation(() => User)
   addUser(@Args() userData: UserArgsType): Promise<User> {
     try {
-      const user = User.create({ ...userData });
+      const user = User.create({ ...userData }).save();
 
-      return user.save();
+      return user;
     } catch (error) {
       throw new Error(error);
     }
   }
 
   @Query(() => User)
-  async getUser(@Arg('id') userId: number): Promise<User | undefined> {
+  async getUser(
+    @Arg('userId', () => Int) userId: number
+  ): Promise<User | undefined> {
     try {
       const user = await User.findOne(userId);
 

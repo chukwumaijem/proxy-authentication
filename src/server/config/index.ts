@@ -9,7 +9,7 @@ const envsFromFile = {
     .required(),
   PORT: number()
     .min(1000)
-    .max(9000)
+    .max(9000),
 };
 
 const envVarKeys = Object.keys(envsFromFile);
@@ -27,5 +27,5 @@ export default {
   isStaging: envVars.NODE_ENV === 'staging',
   isProduction: envVars.NODE_ENV === 'production',
   NODE_ENV: envVars.NODE_ENV,
-  PORT: envVars.PORT || 7000
+  PORT: envVars.PORT || 7000,
 };

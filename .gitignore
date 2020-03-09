@@ -8,4 +8,4 @@ node_modules/
 dist
 .env
 package-lock.json
-.vscode
+# .vscode # commented it out so as to pick the TypeScript version of the project instead of the default vscode version. The default version is lower.
