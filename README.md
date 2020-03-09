@@ -55,3 +55,13 @@ rm -rf src/migrations/NAME_OF_MIGRATION_FILE.ts
 
 Then generate a new migration file again by following the instructions above again until the migration looks perfect.
 
+# Entities:
+We use [typedi](https://github.com/typestack/typedi) for dependency injection. After creating an entity do not forget to import it into the entities/index.ts file and set it in the typedi container.
+```
+Container.set({ id: 'EntityName', factory: () => Entity });
+```
+And in the service, you now inject the entity
+```
+  @Inject('EntityName')
+  private entityVariable = Entity;
+```

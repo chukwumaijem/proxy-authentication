@@ -1,16 +1,17 @@
-import { getConnection } from 'typeorm';
+import { Service, Inject } from 'typedi';
 import { User } from '../../entities';
 import { UserArgsType } from '../../types';
 
+@Service()
 export class UserService {
-  private connection = getConnection();
-  private userRepository = this.connection.getRepository(User);
+  @Inject('UserEntity')
+  private userModel = User;
 
   async addUser(userData: UserArgsType): Promise<User> {
     try {
-      const user = this.userRepository.create({ ...userData });
+      const user = this.userModel.create({ ...userData });
 
-      return this.userRepository.save(user);
+      return this.userModel.save(user);
     } catch (error) {
       throw new Error(error);
     }
@@ -18,7 +19,7 @@ export class UserService {
 
   async getUser(userId: number): Promise<User | undefined> {
     try {
-      const user = await this.userRepository.findOne(userId);
+      const user = await this.userModel.findOne(userId);
 
       return user;
     } catch (error) {
@@ -28,7 +29,7 @@ export class UserService {
 
   async getUsers(): Promise<User[]> {
     try {
-      const users = await this.userRepository.find();
+      const users = await this.userModel.find();
 
       return users;
     } catch (error) {

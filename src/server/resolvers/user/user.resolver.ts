@@ -1,9 +1,12 @@
 import { Resolver, Arg, Query, Mutation, Args } from 'type-graphql';
+import { Service } from 'typedi';
+
 import { User } from '../../entities';
 import { UserArgsType } from '../../types';
 import { UserService } from './user.service';
 
 @Resolver()
+@Service()
 export class UserResolver {
   constructor(private userService: UserService) {}
 
