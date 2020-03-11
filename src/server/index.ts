@@ -7,6 +7,7 @@ import graphqlHTTP from 'express-graphql';
 import { createConnection } from 'typeorm';
 import morgan from 'morgan';
 
+import { Container } from './entities';
 import { logger } from './utilities';
 import envs from './config';
 
@@ -20,6 +21,7 @@ app.prepare().then(async () => {
     await connection.runMigrations();
     const schema = await buildSchema({
       resolvers: [__dirname + '/**/*.resolver.ts'],
+      container: Container,
     });
 
     const server = express();

@@ -27,6 +27,7 @@
     "react-dom": "^16.8.4",
     "reflect-metadata": "^0.1.13",
     "type-graphql": "^0.17.6",
+    "typedi": "^0.8.0",
     "typeorm": "^0.2.24",
     "winston": "^3.2.1"
   },
