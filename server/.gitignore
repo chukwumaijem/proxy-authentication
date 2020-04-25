@@ -10,8 +10,9 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-# OS
+# misc
 .DS_Store
+.env
 
 # Tests
 /coverage

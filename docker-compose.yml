@@ -20,7 +20,7 @@ services:
     ports:
       - '8000:8000'
     build:
-      context: ./server
+      context: server/
       dockerfile: Dockerfile
     environment:
       - DATABASE_URL=postgres://postgres:test@db.local:5432/auth-proxy
