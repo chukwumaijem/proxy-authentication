@@ -6,7 +6,7 @@ export class AppService implements OnModuleInit {
   constructor(private readonly accountUserService: AccountUserService) {}
 
   async onModuleInit() {
-    const numberOfAccountUsers = await this.accountUserService.countAccountUser();
+    const numberOfAccountUsers = await this.accountUserService.countAccountUsers();
     if (numberOfAccountUsers < 1) {
       this.accountUserService.createDefaultAccount();
     }

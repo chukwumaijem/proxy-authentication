@@ -45,7 +45,7 @@ export class AccountUserService {
     return responseData;
   }
 
-  async countAccountUser(): Promise<Number> {
+  async countAccountUsers(): Promise<Number> {
     const [_, accountUsersCount] = await this.acountUserRepo.findAndCount();
     return accountUsersCount;
   }
