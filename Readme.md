@@ -8,7 +8,10 @@ A self hosted identity service. Create React App frontend and Nestjs Backend.
 
 Create a .env.local file inside the client foler, copy the content of .env.local.example into it and update the values as needed. Create a .env file inside the server foler, copy the content of .env.example into it and update the values as needed. Always add new env variable to the appropriate .example file but with a dummy value.
 
+If you set your backend PORT value to something other 8000, remember to update it in the docker-compose file, but do not commit this change.
+
 To start the app with simply run `docker-compose up`. If this is the first time this command is run, it will build the all three services needed to run the app: client, server, database. When a new library is installed, remember to run `docker-compose build` before running `up`.
+
 
 ### Production build
 
