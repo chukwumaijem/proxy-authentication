@@ -1,16 +1,25 @@
+import { join } from 'path';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
-import configuration from './config/app';
-import { envValidator } from './utils';
+import { AppService } from './app.service';
+import { UserModule } from './modules/user';
+import envs from './config/app';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      load: [configuration],
-      validationSchema: envValidator,
+    GraphQLModule.forRoot({
+      debug: !envs.isProduction,
+      playground: !envs.isProduction,
+      autoSchemaFile: join(process.cwd(), 'src/schema/schema.gql'),
     }),
+    TypeOrmModule.forRoot({
+      ...envs.database,
+      autoLoadEntities: true,
+    }),
+    UserModule,
   ],
+  providers: [AppService],
 })
 export class AppModule {}
