@@ -1,14 +1,16 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
 
 import { AccountUserEntity } from '../entities/account-user.entity';
 import { AccountUserService } from '../services/account-user.service';
-
-@Resolver()
+import { LoginDto, LoginResponse } from '../dto';
+@Resolver(() => AccountUserEntity)
 export class AccountUserResolver {
   constructor(private acountService: AccountUserService) {}
 
-  @Query(() => [AccountUserEntity])
-  async acountUsers() {
-    return this.acountService.getAllUsers();
+  @Query(() => LoginResponse)
+  async accountUserlogin(
+    @Args('loginData', { type: () => LoginDto }) loginData: LoginDto,
+  ) {
+    return this.acountService.accountUserlogin(loginData);
   }
 }

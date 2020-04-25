@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import * as bcrypt from 'bcryptjs';
-import { IsEmail, MinLength, IsDate, IsBoolean } from 'class-validator';
+import { IsEmail, MinLength } from 'class-validator';
 
 @ObjectType()
 @Entity()

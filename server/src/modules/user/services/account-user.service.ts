@@ -2,9 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { validateOrReject } from 'class-validator';
+import * as bcrypt from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
 
-import { AccountUserEntity } from '../entities/account-user.entity';
 import envs from '../../../config/app';
+import { AccountUserEntity } from '../entities/account-user.entity';
+import { LoginDto, LoginResponse } from '../dto';
 
 @Injectable()
 export class AccountUserService {
@@ -13,9 +16,33 @@ export class AccountUserService {
     private acountUserRepo: Repository<AccountUserEntity>,
   ) {}
 
-  async getAllUsers(): Promise<AccountUserEntity[]> {
-    const data = await this.acountUserRepo.find();
-    return data;
+  private verifyPassword(received, saved): boolean {
+    return bcrypt.compareSync(received, saved);
+  }
+
+  private generateToken(email): string {
+    return sign({ email }, envs.authSecret, { expiresIn: '1h' });
+  }
+
+  async accountUserlogin({
+    email,
+    password,
+  }: LoginDto): Promise<LoginResponse> {
+    const responseData = { success: false, message: '', data: null };
+    const user = await this.acountUserRepo.findOne({ email });
+
+    if (!this.verifyPassword(password, user.password)) {
+      responseData.message = 'Login error. Try again.';
+      return responseData;
+    }
+
+    responseData.success = true;
+    responseData.data = {
+      token: this.generateToken(user.email),
+      user,
+    };
+
+    return responseData;
   }
 
   async countAccountUser(): Promise<Number> {

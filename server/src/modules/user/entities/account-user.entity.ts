@@ -1,7 +1,6 @@
 import {
   Entity,
   Column,
-  CreateDateColumn,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { UserEntity } from '../../../shared/entities/user.entity';
@@ -16,4 +15,8 @@ export class AccountUserEntity extends UserEntity {
   @Field()
   @Column({ default: false })
   invite_accepted: boolean;
+
+  @Field()
+  @Column({ default: false })
+  default_password_changed: boolean;
 }
