@@ -1,0 +1,51 @@
+version: '3'
+services:
+  proxy-auth-client:
+    image: proxy-auth-client
+    stdin_open: true
+    container_name: proxy-auth-client
+    ports:
+      - '3000:3000'
+    build:
+      context: client/
+      dockerfile: Dockerfile
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+
+  proxy-auth-server:
+    image: proxy-auth-server
+    stdin_open: true
+    container_name: proxy-auth-server
+    ports:
+      - '8000:8000'
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      - DATABASE_URL=postgres://postgres:test@db.local:5432/auth-proxy
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    depends_on:
+      - database
+    links:
+      - database:db.local
+  
+  database:
+    image: postgres:11.5
+    volumes:
+      - ./.postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=auth-proxy
+    volumes:
+      - ./server/scripts:/scripts
+    healthcheck:
+      test: ["CMD", "/servers/scripts/wait-for-db.sh"]
+      interval: 5s
+      retries: 5
+      timeout: 20s
