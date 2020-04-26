@@ -3,7 +3,7 @@ import {
   Column,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { UserEntity } from '../../../shared/entities/user.entity';
+import { UserEntity } from '../../../common/entities/user.entity';
 
 @ObjectType()
 @Entity()

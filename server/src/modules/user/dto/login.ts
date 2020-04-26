@@ -11,7 +11,7 @@ export class LoginDto {
 }
 
 @ObjectType()
-class Data {
+class UserData {
   @Field(() => AccountUserEntity)
   user: AccountUserEntity;
 
@@ -28,5 +28,5 @@ export class LoginResponse {
   success: boolean;
 
   @Field({ nullable: true })
-  data: Data;
+  data: UserData;
 }
