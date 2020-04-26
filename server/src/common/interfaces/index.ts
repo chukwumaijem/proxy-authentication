@@ -1,1 +1,1 @@
-export { IUser } from './user';
+export { ICurrentUser, IUser } from './user';

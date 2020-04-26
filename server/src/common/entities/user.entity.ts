@@ -9,7 +9,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import * as bcrypt from 'bcryptjs';
+import { genSaltSync, hashSync } from 'bcryptjs';
 import { IsEmail, MinLength } from 'class-validator';
 
 @ObjectType()
@@ -21,11 +21,11 @@ export abstract class UserEntity extends BaseEntity {
 
   @Field()
   @Column({ nullable: true })
-  first_name: string;
+  firstName: string;
 
   @Field()
   @Column({ nullable: true })
-  last_name: string;
+  lastName: string;
 
   @Field()
   @IsEmail()
@@ -38,26 +38,26 @@ export abstract class UserEntity extends BaseEntity {
 
   @Field(() => Date)
   @CreateDateColumn()
-  created_date: Date;
+  createdAt: Date;
 
   @Field(() => Date)
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 
   @Field(() => Date)
   @Column({ nullable: true })
-  last_login_date: Date;
+  lastLoginDate: Date;
 
   @Field()
   @Column({ default: false })
-  email_verified: boolean;
+  emailVerified: boolean;
 
   @BeforeInsert()
   @BeforeUpdate()
   encryptPassword() {
     if (this.password) {
-      const salt = bcrypt.genSaltSync(10);
-      this.password = bcrypt.hashSync(this.password, salt);
+      const salt = genSaltSync(10);
+      this.password = hashSync(this.password, salt);
     }
   }
 }
