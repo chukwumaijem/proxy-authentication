@@ -1,7 +1,7 @@
-import { SuccessFailResponse } from '../dto/success-fail.dto';
+import { SuccessFailResponseUnion } from '../dto';
 
-export const responseHandler = (success: boolean, message: string, data = null): SuccessFailResponse => ({
-  success,
-  message,
-  data,
-});
+export const responseHandler = (success: boolean, message: string, data: any = null) => {
+  const response: typeof SuccessFailResponseUnion = { success, message, data };
+
+  return response;
+};

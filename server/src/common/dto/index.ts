@@ -1,2 +1,2 @@
-export { SuccessFailResponse } from './success-fail.dto';
 export { MessageStatusDto } from './message-status.dto';
+export { SuccessFailResponseUnion } from './success-fail.dto';

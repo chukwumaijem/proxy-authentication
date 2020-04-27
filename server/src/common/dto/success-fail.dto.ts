@@ -1,26 +1,16 @@
-import { ObjectType, Field, createUnionType } from '@nestjs/graphql';
+import { createUnionType } from '@nestjs/graphql';
 
-import { TokenDto, UserData } from '../../modules/user/dto';
+import { ChangePasswordResponse, LoginResponse } from '../../modules/user/dto';
 import { MessageStatusDto } from './message-status.dto';
 
-const SuccessFailDataUnion = createUnionType({
-  name: 'SuccessFailData',
-  types: () => [UserData, TokenDto, MessageStatusDto],
+export const SuccessFailResponseUnion = createUnionType({
+  name: 'SuccessFailResponse',
+  types: () => [MessageStatusDto, ChangePasswordResponse, LoginResponse] as any,
   resolveType: value => {
-    if (value.user) return UserData;
-    if (value.token) return TokenDto;
+    if (value && value.data) {
+      if (value.data.user) return ChangePasswordResponse;
+      if (value.data.token) return LoginResponse;
+    }
     return MessageStatusDto;
   },
 });
-
-@ObjectType()
-export class SuccessFailResponse {
-  @Field()
-  message: string;
-
-  @Field()
-  success: boolean;
-
-  @Field(() => SuccessFailDataUnion, { nullable: true })
-  data: UserData | TokenDto | MessageStatusDto;
-}
