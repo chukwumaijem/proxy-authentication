@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppService } from './app.service';
 import { UserModule } from './modules/user';
+import { ApplicationModule } from './modules/application';
 import envs from './config/app';
 
 @Module({
@@ -19,6 +20,7 @@ import envs from './config/app';
       autoLoadEntities: true,
     }),
     UserModule,
+    ApplicationModule,
   ],
   providers: [AppService],
 })
