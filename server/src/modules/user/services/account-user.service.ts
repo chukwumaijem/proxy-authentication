@@ -9,7 +9,7 @@ import envs from '../../../config/app';
 import { AccountUserEntity } from '../entities/account-user.entity';
 import { LoginDto, ChangePasswordDto } from '../dto';
 import { ICurrentUser, IUser } from '../../../common/interfaces';
-import { DEFAULT_USER } from '../constants';
+import { DEFAULT_USER } from '../../../common/constants';
 import { responseHandler } from '../../../common/utils';
 
 @Injectable()

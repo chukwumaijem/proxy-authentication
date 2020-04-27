@@ -11,11 +11,11 @@ import { MessageStatusDto } from '../../../common/dto';
 
 @Resolver(() => AccountUserEntity)
 export class AccountUserResolver {
-  constructor(private acountService: AccountUserService) {}
+  constructor(private accountService: AccountUserService) {}
 
   @Query(() => LoginResponse)
   async accountUserlogin(@Args('loginData', { type: () => LoginDto }) loginData: LoginDto) {
-    return this.acountService.accountUserlogin(loginData);
+    return this.accountService.accountUserlogin(loginData);
   }
 
   @Query(() => ChangePasswordResponse)
@@ -25,7 +25,7 @@ export class AccountUserResolver {
     changePasswordData: ChangePasswordDto,
     @CurrentUser() currentUser: ICurrentUser,
   ) {
-    return this.acountService.changePassword(changePasswordData, currentUser);
+    return this.accountService.changePassword(changePasswordData, currentUser);
   }
 
   @Query(() => MessageStatusDto)
@@ -35,6 +35,6 @@ export class AccountUserResolver {
     email: string,
     @CurrentUser() currentUser: ICurrentUser,
   ) {
-    return this.acountService.addAccountUser(email, currentUser);
+    return this.accountService.addAccountUser(email, currentUser);
   }
 }
