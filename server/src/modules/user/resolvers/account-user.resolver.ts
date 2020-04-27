@@ -6,7 +6,8 @@ import { AccountUserService } from '../services/account-user.service';
 import { LoginDto, LoginResponse, ChangePasswordDto, ChangePasswordResponse } from '../dto';
 import { LoggedInGuard } from '../../../common/guards';
 import { CurrentUser } from '../../../common/decorators';
-import { IUser } from '../../../common/interfaces';
+import { ICurrentUser } from '../../../common/interfaces';
+import { MessageStatusDto } from '../../../common/dto';
 
 @Resolver(() => AccountUserEntity)
 export class AccountUserResolver {
@@ -22,8 +23,18 @@ export class AccountUserResolver {
   async changePassword(
     @Args('changePasswordData', { type: () => ChangePasswordDto })
     changePasswordData: ChangePasswordDto,
-    @CurrentUser() currentUser: IUser,
+    @CurrentUser() currentUser: ICurrentUser,
   ) {
     return this.acountService.changePassword(changePasswordData, currentUser);
+  }
+
+  @Query(() => MessageStatusDto)
+  @UseGuards(LoggedInGuard)
+  async addAccountUser(
+    @Args('email')
+    email: string,
+    @CurrentUser() currentUser: ICurrentUser,
+  ) {
+    return this.acountService.addAccountUser(email, currentUser);
   }
 }

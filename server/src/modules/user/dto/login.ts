@@ -1,5 +1,6 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { AccountUserEntity } from '../entities/account-user.entity';
+import { MessageStatusDto } from '../../../common/dto';
 
 @InputType()
 export class LoginDto {
@@ -20,13 +21,7 @@ class UserData {
 }
 
 @ObjectType()
-export class LoginResponse {
-  @Field()
-  message: string;
-
-  @Field()
-  success: boolean;
-
+export class LoginResponse extends MessageStatusDto {
   @Field({ nullable: true })
   data: UserData;
 }

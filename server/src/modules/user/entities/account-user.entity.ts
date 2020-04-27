@@ -1,7 +1,4 @@
-import {
-  Entity,
-  Column,
-} from 'typeorm';
+import { Entity, Column } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { UserEntity } from '../../../common/entities/user.entity';
 
@@ -10,13 +7,17 @@ import { UserEntity } from '../../../common/entities/user.entity';
 export class AccountUserEntity extends UserEntity {
   @Field(() => Date)
   @Column({ nullable: true })
-  invite_accepted_on: Date;
+  inviteAcceptedOn: Date;
 
   @Field()
   @Column({ default: false })
-  invite_accepted: boolean;
+  inviteAccepted: boolean;
 
   @Field()
   @Column({ default: false })
-  default_password_changed: boolean;
+  defaultPasswordChanged: boolean;
+
+  @Field(() => ID)
+  @Column({ nullable: false })
+  invitedBy: string;
 }

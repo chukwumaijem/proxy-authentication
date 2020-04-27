@@ -1,4 +1,5 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
+import { MessageStatusDto } from '../../../common/dto';
 
 @InputType()
 export class ChangePasswordDto {
@@ -10,13 +11,13 @@ export class ChangePasswordDto {
 }
 
 @ObjectType()
-export class ChangePasswordResponse {
+class TokenDto {
   @Field()
-  message: string;
-
-  @Field()
-  success: boolean;
-
-  @Field({ nullable: true })
   token: string;
+}
+
+@ObjectType()
+export class ChangePasswordResponse extends MessageStatusDto {
+  @Field({ nullable: true })
+  data: TokenDto;
 }
