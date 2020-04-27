@@ -5,44 +5,34 @@ import { validateOrReject } from 'class-validator';
 
 import envs from '../../../config/app';
 import { ApplicationEntity } from '../entities/application.entity';
-import { RequestURLEntity } from '../entities/request-urls.entity';
 import { responseHandler } from '../../../common/utils';
 import { CreateApplicationInput } from '../dto';
 import { ICurrentUser } from '../../../common/interfaces';
 
 @Injectable()
 export class ApplicationService {
-  constructor(
-    @InjectRepository(ApplicationEntity) private applicationRepo: Repository<ApplicationEntity>,
-    @InjectRepository(RequestURLEntity) private requestUrlRepo: Repository<RequestURLEntity>,
-  ) {}
+  constructor(@InjectRepository(ApplicationEntity) private applicationRepo: Repository<ApplicationEntity>) {}
 
-  private generateKey(prefix: string): string {
-    const key = Buffer.from(`${envs.authSecret}${new Date().getDate()}`)
+  private generateKey(prefix: string, signature: string): string {
+    const key = Buffer.from(`${signature}${new Date().getTime()}`)
       .toString('base64')
-      .substr(0, 30);
+      .substr(0, 35);
 
     return `${prefix}_${key}`;
   }
 
   async createApplication({ name, requestUrls }: CreateApplicationInput, currentUser: ICurrentUser) {
     try {
-      let requestUrlIds = [];
-      if (requestUrls.length) {
-        const requestUrlObjects = requestUrls.map(item => ({
-          url: item,
-        }));
-
-        const urlData = await this.requestUrlRepo.insert(requestUrlObjects);
-        requestUrlIds = urlData.identifiers.map(item => item.id);
-      }
+      const requestUrlObjects = requestUrls.map(requestUrl => ({
+        url: requestUrl,
+      }));
 
       const applicationData = {
         name,
         createdBy: currentUser.id,
-        secretKey: this.generateKey('sk'),
-        publicKey: this.generateKey('pk'),
-        requestUrls: requestUrlIds,
+        secretKey: this.generateKey('sk', envs.secretKeySignature),
+        publicKey: this.generateKey('pk', envs.publicKeySignature),
+        requestUrls: requestUrlObjects,
       };
 
       const application = await this.applicationRepo.create(applicationData);

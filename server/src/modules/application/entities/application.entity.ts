@@ -34,6 +34,9 @@ export class ApplicationEntity extends BaseEntity {
   @OneToMany(
     () => RequestURLEntity,
     requestUrl => requestUrl.application,
+    {
+      cascade: ['insert'],
+    },
   )
   requestUrls: RequestURLEntity[];
 
