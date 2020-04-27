@@ -29,6 +29,10 @@ services:
       - DB_PASSWORD=test
       - DB_NAME=auth-proxy
       - DB_HOST=postgres
+      - DEFAULT_ACCOUNT_EMAIL=default_user@email.com # required on first start
+      - AUTH_SECRET=om39
+      - PUBLIC_KEY_SIGNATURE=u493ur2
+      - SECRET_KEY_SIGNATURE=we93je3
     volumes:
       - ./server:/app
       - /app/node_modules

@@ -17,6 +17,8 @@ const envsFromFile = {
   DB_PORT: number().required(),
   DEFAULT_ACCOUNT_EMAIL: string(),
   AUTH_SECRET: string().required(),
+  PUBLIC_KEY_SIGNATURE: string().required(),
+  SECRET_KEY_SIGNATURE: string().required(),
 };
 
 const envVarKeys = Object.keys(envsFromFile);
@@ -47,4 +49,6 @@ export default {
   database,
   defaultAccountEmail: envVars.DEFAULT_ACCOUNT_EMAIL,
   authSecret: envVars.AUTH_SECRET,
+  publicKeySignature: envVars.PUBLIC_KEY_SIGNATURE,
+  secretKeySignature: envVars.SECRET_KEY_SIGNATURE,
 };
