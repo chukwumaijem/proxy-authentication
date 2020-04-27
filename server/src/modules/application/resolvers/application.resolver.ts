@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 
 import { ApplicationEntity } from '../entities/application.entity';
@@ -17,5 +17,11 @@ export class ApplicationResolver {
   @UseGuards(LoggedInGuard)
   async createApplication(@Args('data') data: CreateApplicationInput, @CurrentUser() currentUser: ICurrentUser) {
     return this.applicationService.createApplication(data, currentUser);
+  }
+
+  @Query(() => [ApplicationEntity], { name: 'applications' })
+  @UseGuards(LoggedInGuard)
+  async getApplications() {
+    return this.applicationService.getApplications();
   }
 }
