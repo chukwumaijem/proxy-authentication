@@ -30,8 +30,8 @@ export class AccountUserService {
     return compareSync(received, saved);
   }
 
-  private generateToken(email: string): string {
-    return sign({ email }, envs.authSecret, { expiresIn: '7d' });
+  private generateToken(email: string, id: string): string {
+    return sign({ email, id }, envs.authSecret, { expiresIn: '7d' });
   }
 
   private async findUserByEmail(email: string): Promise<IUser | null> {
@@ -90,7 +90,7 @@ export class AccountUserService {
       return responseHandler(false, 'Login error. Try again.');
     }
 
-    return responseHandler(true, 'Login Success.', { token: this.generateToken(user.email), user });
+    return responseHandler(true, 'Login Success.', { token: this.generateToken(user.email, user.id), user });
   }
 
   async changePassword(data: ChangePasswordDto, currentUser: ICurrentUser) {
@@ -104,7 +104,7 @@ export class AccountUserService {
     user.defaultPasswordChanged = true;
     user.save();
 
-    return responseHandler(true, 'Password changed successfully', { token: this.generateToken(user.email) });
+    return responseHandler(true, 'Password changed successfully', { token: this.generateToken(user.email, user.id) });
   }
 
   async addAccountUser(email: string, currentUser: ICurrentUser) {
