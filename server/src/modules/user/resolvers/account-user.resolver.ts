@@ -1,4 +1,4 @@
-import { Resolver, Query, Args } from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 
 import { AccountUserEntity } from '../entities/account-user.entity';
@@ -18,7 +18,7 @@ export class AccountUserResolver {
     return this.accountService.accountUserlogin(loginData);
   }
 
-  @Query(() => ChangePasswordResponse)
+  @Mutation(() => ChangePasswordResponse)
   @UseGuards(LoggedInGuard)
   async changePassword(
     @Args('changePasswordData', { type: () => ChangePasswordDto })
@@ -28,7 +28,7 @@ export class AccountUserResolver {
     return this.accountService.changePassword(changePasswordData, currentUser);
   }
 
-  @Query(() => MessageStatusDto)
+  @Mutation(() => MessageStatusDto)
   @UseGuards(LoggedInGuard)
   async addAccountUser(
     @Args('email')
