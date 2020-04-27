@@ -7,6 +7,7 @@ import { LoginDto, LoginResponse, ChangePasswordDto, ChangePasswordResponse } fr
 import { LoggedInGuard } from '../../../common/guards';
 import { CurrentUser } from '../../../common/decorators';
 import { ICurrentUser } from '../../../common/interfaces';
+import { MessageStatusDto } from '../../../common/dto';
 
 @Resolver(() => AccountUserEntity)
 export class AccountUserResolver {
@@ -27,7 +28,7 @@ export class AccountUserResolver {
     return this.acountService.changePassword(changePasswordData, currentUser);
   }
 
-  @Query(() => ChangePasswordResponse)
+  @Query(() => MessageStatusDto)
   @UseGuards(LoggedInGuard)
   async addAccountUser(
     @Args('email')

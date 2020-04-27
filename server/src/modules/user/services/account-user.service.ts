@@ -7,10 +7,10 @@ import { sign } from 'jsonwebtoken';
 
 import envs from '../../../config/app';
 import { AccountUserEntity } from '../entities/account-user.entity';
-import { LoginDto, LoginResponse, ChangePasswordDto, ChangePasswordResponse } from '../dto';
+import { LoginDto, ChangePasswordDto } from '../dto';
 import { ICurrentUser, IUser } from '../../../common/interfaces';
-import { SuccessFailResponse } from '../../../common/dto';
 import { DEFAULT_USER } from '../constants';
+import { responseHandler } from '../../../common/utils';
 
 @Injectable()
 export class AccountUserService {
@@ -71,19 +71,6 @@ export class AccountUserService {
     console.log('Default User Credntials: \t', JSON.stringify(data, null, 2));
   }
 
-  async accountUserlogin({ email, password }: LoginDto): Promise<LoginResponse> {
-    const response = { success: false, message: 'Login error. Try again.', data: null };
-    const user = await this.findUserByEmail(email);
-
-    if (!this.verifyPassword(password, user.password)) return response;
-
-    response.success = true;
-    response.data = { token: this.generateToken(user.email), user };
-    response.message = 'Login Success.';
-
-    return response;
-  }
-
   async createAccountUser(email: string, invitedBy: string) {
     try {
       const userData = { email, password: this.generatePassword(), invitedBy };
@@ -96,33 +83,38 @@ export class AccountUserService {
     }
   }
 
-  async changePassword(data: ChangePasswordDto, currentUser: ICurrentUser): Promise<ChangePasswordResponse> {
-    const response = { message: 'Could not change user password', success: false, token: null };
+  async accountUserlogin({ email, password }: LoginDto) {
+    const user = await this.findUserByEmail(email);
+
+    if (!this.verifyPassword(password, user.password)) {
+      return responseHandler(false, 'Login error. Try again.');
+    }
+
+    return responseHandler(true, 'Login Success.', { token: this.generateToken(user.email), user });
+  }
+
+  async changePassword(data: ChangePasswordDto, currentUser: ICurrentUser) {
     const user = await this.accountUserRepo.findOne({ email: currentUser.email });
 
-    if (!user) return response;
-    if (!this.verifyPassword(data.currentPassword, user.password)) return response;
+    if (!user || !this.verifyPassword(data.currentPassword, user.password)) {
+      return responseHandler(false, 'Could not change user password');
+    }
+
     user.password = data.newPassword;
     user.defaultPasswordChanged = true;
     user.save();
 
-    response.message = 'Password changed successfully';
-    response.success = true;
-    response.token = this.generateToken(user.email);
-    return response;
+    return responseHandler(true, 'Password changed successfully', { token: this.generateToken(user.email) });
   }
 
-  async addAccountUser(email: string, currentUser: ICurrentUser): Promise<SuccessFailResponse> {
-    const response = { success: false, message: 'Could not add member to account' };
+  async addAccountUser(email: string, currentUser: ICurrentUser) {
     const user = await this.accountUserRepo.findOne({ email: currentUser.email });
 
     try {
-      this.createAccountUser(email, user.id);
-      response.success = true;
-      response.message = 'User added to account.';
-      return response;
+      await this.createAccountUser(email, user.id);
+      return responseHandler(true, 'User added to account.');
     } catch (error) {
-      return response;
+      return responseHandler(false, 'Could not add member to account');
     }
   }
 }

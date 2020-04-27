@@ -11,7 +11,7 @@ export class LoginDto {
 }
 
 @ObjectType()
-class UserData {
+export class UserData {
   @Field(() => AccountUserEntity)
   user: AccountUserEntity;
 

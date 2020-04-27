@@ -10,6 +10,12 @@ export class ChangePasswordDto {
 }
 
 @ObjectType()
+export class TokenDto {
+  @Field()
+  token: string;
+}
+
+@ObjectType()
 export class ChangePasswordResponse {
   @Field()
   message: string;
@@ -18,5 +24,5 @@ export class ChangePasswordResponse {
   success: boolean;
 
   @Field({ nullable: true })
-  token: string;
+  data: TokenDto;
 }
