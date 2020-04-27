@@ -38,9 +38,9 @@ export class ApplicationService {
       const application = await this.applicationRepo.create(applicationData);
       await validateOrReject(application);
       application.save();
-      responseHandler(true, 'Application Created.');
+      return responseHandler(true, 'Application Created.');
     } catch (error) {
-      responseHandler(false, 'Error Creating Application.');
+      return responseHandler(false, 'Error Creating Application.');
     }
   }
 
