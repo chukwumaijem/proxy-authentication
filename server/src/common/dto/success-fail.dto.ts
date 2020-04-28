@@ -1,6 +1,6 @@
 import { createUnionType } from '@nestjs/graphql';
 
-import { ChangePasswordResponse, LoginResponse } from '../../modules/user/dto';
+import { ChangePasswordResponse, LoginResponse } from 'src/modules/user/dto';
 import { MessageStatusDto } from './message-status.dto';
 
 export const SuccessFailResponseUnion = createUnionType({
