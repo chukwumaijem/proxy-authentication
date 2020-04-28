@@ -18,7 +18,7 @@ class ApplicationData {
 }
 
 @ObjectType()
-export class CreateApplicationResponse extends MessageStatusDto {
+export class ApplicationResponseDto extends MessageStatusDto {
   @Field({ nullable: true })
   data: ApplicationData;
 }
