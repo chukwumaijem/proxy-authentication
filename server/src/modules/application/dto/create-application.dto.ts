@@ -13,7 +13,7 @@ export class CreateApplicationInput {
 
 @ObjectType()
 class ApplicationData {
-  @Field(() => ApplicationEntity)
+  @Field(() => ApplicationEntity, { nullable: true })
   application: ApplicationEntity;
 }
 

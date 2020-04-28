@@ -68,7 +68,7 @@ export class ApplicationService {
 
   async getApplication(applicationId: string) {
     const application = await this.applicationRepo.findOne(applicationId, { relations: ['requestUrls'] });
-    return application;
+    return responseHandler(true, 'Application', { application });
   }
 
   async updateApplication(data: UpdateApplicationInput) {

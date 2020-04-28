@@ -27,13 +27,13 @@ export class ApplicationResolver {
     return this.applicationService.createApplication(data, currentUser);
   }
 
-  @Query(() => [ApplicationEntity], { name: 'applications' })
+  @Query(() => [ApplicationEntity], { name: 'applications', nullable: 'items' })
   @UseGuards(LoggedInGuard)
   async getApplications() {
     return this.applicationService.getApplications();
   }
 
-  @Query(() => ApplicationEntity, { name: 'application' })
+  @Query(() => ApplicationResponseDto, { name: 'application' })
   @UseGuards(LoggedInGuard)
   async getApplication(@Args('applicationId') applicationId: string) {
     return this.applicationService.getApplication(applicationId);
