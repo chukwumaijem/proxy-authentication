@@ -76,7 +76,7 @@ export class AccountUserService {
       const userData = { email, password: this.generatePassword(), invitedBy };
       const user = this.accountUserRepo.create(userData);
       await validateOrReject(user);
-      user.save();
+      await user.save();
       this.sendInvitation(user);
     } catch (error) {
       throw new Error(`Could not create default user: ${error}`);
@@ -102,7 +102,7 @@ export class AccountUserService {
 
     user.password = data.newPassword;
     user.defaultPasswordChanged = true;
-    user.save();
+    await user.save();
 
     return responseHandler(true, 'Password changed successfully', { token: this.generateToken(user.email, user.id) });
   }

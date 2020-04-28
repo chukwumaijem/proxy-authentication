@@ -1,1 +1,1 @@
-export { CreateApplicationInput } from './create-application.dto';
+export { CreateApplicationInput, CreateApplicationResponse } from './create-application.dto';

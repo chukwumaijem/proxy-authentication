@@ -1,4 +1,6 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, ObjectType } from '@nestjs/graphql';
+import { MessageStatusDto } from '../../../common/dto';
+import { ApplicationEntity } from '../entities/application.entity';
 
 @InputType()
 export class CreateApplicationInput {
@@ -7,4 +9,16 @@ export class CreateApplicationInput {
 
   @Field(() => [String], { nullable: 'items' })
   requestUrls: string[];
+}
+
+@ObjectType()
+class ApplicationData {
+  @Field(() => ApplicationEntity)
+  application: ApplicationEntity;
+}
+
+@ObjectType()
+export class CreateApplicationResponse extends MessageStatusDto {
+  @Field({ nullable: true })
+  data: ApplicationData;
 }

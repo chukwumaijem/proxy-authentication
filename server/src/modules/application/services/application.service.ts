@@ -35,10 +35,10 @@ export class ApplicationService {
         requestUrls: requestUrlObjects,
       };
 
-      const application = await this.applicationRepo.create(applicationData);
+      const application = this.applicationRepo.create(applicationData);
       await validateOrReject(application);
-      application.save();
-      return responseHandler(true, 'Application Created.');
+      await application.save();
+      return responseHandler(true, 'Application Created.', { application });
     } catch (error) {
       return responseHandler(false, 'Error Creating Application.');
     }
