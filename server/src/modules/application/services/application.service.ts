@@ -5,8 +5,15 @@ import { validateOrReject } from 'class-validator';
 
 import envs from '../../../config/app';
 import { ApplicationEntity } from '../entities/application.entity';
+import { RequestURLEntity } from '../entities/request-urls.entity';
 import { responseHandler } from '../../../common/utils';
-import { CreateApplicationInput, UpdateApplicationInput, RefreshKeyInput } from '../dto';
+import {
+  CreateApplicationInput,
+  UpdateApplicationInput,
+  RefreshKeyInput,
+  AddRequestURLInput,
+  UpdateRequestURLInput,
+} from '../dto';
 import { ICurrentUser, IKeyOption } from '../../../common/interfaces';
 import { PUBLIC_KEY, SECRET_KEY } from '../../../common/constants/index';
 
@@ -17,7 +24,10 @@ const options = {
 
 @Injectable()
 export class ApplicationService {
-  constructor(@InjectRepository(ApplicationEntity) private applicationRepo: Repository<ApplicationEntity>) {}
+  constructor(
+    @InjectRepository(ApplicationEntity) private applicationRepo: Repository<ApplicationEntity>,
+    @InjectRepository(RequestURLEntity) private requestURLRepo: Repository<RequestURLEntity>,
+  ) {}
 
   private generateKey(keyOption: IKeyOption): string {
     const { prefix, signature } = keyOption;
@@ -90,6 +100,51 @@ export class ApplicationService {
       return responseHandler(true, 'Key Updated', { key: newKey });
     } catch (error) {
       return responseHandler(false, 'Failed to update key');
+    }
+  }
+
+  async removeApplication(applicationId: string) {
+    try {
+      const application = await this.applicationRepo.findOne(applicationId, { relations: ['requestUrls'] });
+      const requestUrlIds = application.requestUrls.map(url => url.id);
+      await this.requestURLRepo.delete(requestUrlIds);
+
+      await this.applicationRepo.delete(applicationId);
+      return responseHandler(true, 'Application deleted.');
+    } catch (error) {
+      return responseHandler(false, 'Failed to delete application.');
+    }
+  }
+
+  async addRequestURL(data: AddRequestURLInput) {
+    try {
+      const { applicationId, url } = data;
+      const application = await this.applicationRepo.findOne(applicationId);
+      const newURL = this.requestURLRepo.create({ application, url });
+      validateOrReject(newURL);
+      await newURL.save();
+      return responseHandler(true, 'Request URL added to application');
+    } catch (error) {
+      return responseHandler(false, 'Failed to add request url');
+    }
+  }
+
+  async removeRequestURL(requestUrlId: string) {
+    try {
+      this.requestURLRepo.delete(requestUrlId);
+      return responseHandler(true, 'Request URL removed');
+    } catch (error) {
+      return responseHandler(false, 'Failed to remove request URL');
+    }
+  }
+
+  async updateRequestURL(data: UpdateRequestURLInput) {
+    const { requestUrlId, url } = data;
+    try {
+      await this.requestURLRepo.update(requestUrlId, { url });
+      return responseHandler(true, 'Request url updated.');
+    } catch (error) {
+      return responseHandler(false, 'Failed to update request url.');
     }
   }
 }
