@@ -4,10 +4,10 @@ import { UseGuards } from '@nestjs/common';
 import { AccountUserEntity } from '../entities/account-user.entity';
 import { AccountUserService } from '../services/account-user.service';
 import { LoginDto, LoginResponse, ChangePasswordDto, ChangePasswordResponse } from '../dto';
-import { LoggedInGuard } from '../../../common/guards';
-import { CurrentUser } from '../../../common/decorators';
-import { ICurrentUser } from '../../../common/interfaces';
-import { MessageStatusDto } from '../../../common/dto';
+import { LoggedInGuard } from 'src/common/guards';
+import { CurrentUser } from 'src/common/decorators';
+import { ICurrentUser } from 'src/common/interfaces';
+import { MessageStatusDto } from 'src/common/dto';
 
 @Resolver(() => AccountUserEntity)
 export class AccountUserResolver {

@@ -5,12 +5,12 @@ import { validateOrReject } from 'class-validator';
 import { compareSync } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
-import envs from '../../../config/app';
+import envs from 'src/config/app';
 import { AccountUserEntity } from '../entities/account-user.entity';
 import { LoginDto, ChangePasswordDto } from '../dto';
-import { ICurrentUser, IUser } from '../../../common/interfaces';
+import { ICurrentUser, IUser } from 'src/common/interfaces';
 import { DEFAULT_USER } from '../constants';
-import { responseHandler } from '../../../common/utils';
+import { responseHandler } from 'src/common/utils';
 
 @Injectable()
 export class AccountUserService {

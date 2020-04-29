@@ -28,7 +28,7 @@ services:
       - DB_USERNAME=postgres
       - DB_PASSWORD=test
       - DB_NAME=auth-proxy
-      - DB_HOST=postgres
+      - DB_HOST=db.local
     volumes:
       - ./server:/app
       - /app/node_modules
