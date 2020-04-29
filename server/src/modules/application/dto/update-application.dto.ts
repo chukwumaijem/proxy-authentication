@@ -1,6 +1,5 @@
 import { InputType, Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { MessageStatusDto } from '../../../common/dto';
-import { PUBLIC_KEY, SECRET_KEY } from '../../../common/constants';
+import { MessageStatusDto } from 'src/common/dto';
 
 @InputType()
 export class UpdateApplicationInput {
@@ -19,6 +18,7 @@ class KeyData {
   @Field()
   key: string;
 }
+
 @ObjectType()
 export class UpdateApplicationKey extends MessageStatusDto {
   @Field(() => KeyData)
@@ -29,9 +29,11 @@ enum KeyTypes {
   SECRET_KEY,
   PUBLIC_KEY,
 }
+
 registerEnumType(KeyTypes, {
   name: 'KeyTypes',
 });
+
 @InputType()
 export class RefreshKeyInput {
   @Field(() => ID)
