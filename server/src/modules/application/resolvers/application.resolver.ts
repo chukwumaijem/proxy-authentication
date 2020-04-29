@@ -3,9 +3,9 @@ import { UseGuards } from '@nestjs/common';
 
 import { ApplicationEntity } from '../entities/application.entity';
 import { ApplicationService } from '../services/application.service';
-import { LoggedInGuard } from '../../../common/guards';
-import { CurrentUser } from '../../../common/decorators';
-import { ICurrentUser } from '../../../common/interfaces';
+import { LoggedInGuard } from 'src/common/guards';
+import { CurrentUser } from 'src/common/decorators';
+import { ICurrentUser } from 'src/common/interfaces';
 import {
   CreateApplicationInput,
   ApplicationResponseDto,
@@ -15,7 +15,7 @@ import {
   AddRequestURLInput,
   UpdateRequestURLInput,
 } from '../dto';
-import { MessageStatusDto } from '../../../common/dto';
+import { MessageStatusDto } from 'src/common/dto';
 
 @Resolver(() => ApplicationEntity)
 export class ApplicationResolver {

@@ -3,10 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { validateOrReject } from 'class-validator';
 
-import envs from '../../../config/app';
+import envs from 'src/config/app';
 import { ApplicationEntity } from '../entities/application.entity';
 import { RequestURLEntity } from '../entities/request-urls.entity';
-import { responseHandler } from '../../../common/utils';
+import { responseHandler } from 'src/common/utils';
 import {
   CreateApplicationInput,
   UpdateApplicationInput,
@@ -14,8 +14,8 @@ import {
   AddRequestURLInput,
   UpdateRequestURLInput,
 } from '../dto';
-import { ICurrentUser, IKeyOption } from '../../../common/interfaces';
-import { PUBLIC_KEY, SECRET_KEY } from '../../../common/constants/index';
+import { ICurrentUser, IKeyOption } from 'src/common/interfaces';
+import { PUBLIC_KEY, SECRET_KEY } from 'src/common/constants/index';
 
 const options = {
   SECRET_KEY: { prefix: 'sk', signature: envs.secretKeySignature, field: 'secretKey' },

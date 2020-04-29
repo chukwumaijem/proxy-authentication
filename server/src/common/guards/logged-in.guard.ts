@@ -2,7 +2,7 @@ import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { verify } from 'jsonwebtoken';
 
-import envs from '../../config/app';
+import envs from 'src/config/app';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {

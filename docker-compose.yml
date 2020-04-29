@@ -28,7 +28,7 @@ services:
       - DB_USERNAME=postgres
       - DB_PASSWORD=test
       - DB_NAME=auth-proxy
-      - DB_HOST=postgres
+      - DB_HOST=db.local
       - DEFAULT_ACCOUNT_EMAIL=default_user@email.com # required on first start
       - AUTH_SECRET=om39
       - PUBLIC_KEY_SIGNATURE=u493ur2

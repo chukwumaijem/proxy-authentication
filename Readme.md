@@ -6,7 +6,7 @@ A self hosted identity service. Create React App frontend and Nestjs Backend.
 
 ### Development
 
-Create a .env.local file inside the client foler, copy the content of .env.local.example into it and update the values as needed. Create a .env file inside the server foler, copy the content of .env.example into it and update the values as needed. Always add new env variable to the appropriate .example file but with a dummy value.
+Create a .env.local file inside the client folder, copy the content of .env.local.example into it and update the values as needed. Create a .env file inside the server folder, copy the content of .env.example into it and update the values as needed. Always add new env variable to the appropriate .example file but with a dummy value.
 
 If you set your backend PORT value to something other 8000, remember to update it in the docker-compose file, but do not commit this change.
 

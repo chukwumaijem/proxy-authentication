@@ -1,5 +1,5 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
-import { MessageStatusDto } from '../../../common/dto';
+import { MessageStatusDto } from 'src/common/dto';
 
 @InputType()
 export class ChangePasswordDto {

@@ -1,6 +1,6 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { AccountUserEntity } from '../entities/account-user.entity';
-import { MessageStatusDto } from '../../../common/dto';
+import { MessageStatusDto } from 'src/common/dto';
 
 @InputType()
 export class LoginDto {
