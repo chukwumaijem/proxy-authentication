@@ -8,7 +8,7 @@ export const SuccessFailResponseUnion = createUnionType({
   name: 'SuccessFailResponse',
   types: () => [MessageStatusDto, ChangePasswordResponse, LoginResponse] as any,
   resolveType: value => {
-    if (value && value.data) {
+    if (value?.data) {
       const { data } = value;
       if (data.user) return ChangePasswordResponse;
       if (data.token) return LoginResponse;

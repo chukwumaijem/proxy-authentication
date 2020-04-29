@@ -77,7 +77,7 @@ export class ApplicationService {
 
     try {
       const application = await this.applicationRepo.findOne(id, { relations: ['requestUrls'] });
-      if (isActive && !application.requestUrls.length) {
+      if (isActive && !application?.requestUrls?.length) {
         return responseHandler(false, 'Cannot set application to active if requestUrls are not provided.');
       }
       await this.applicationRepo.update(id, updateData);
