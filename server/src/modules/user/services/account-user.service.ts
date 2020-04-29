@@ -9,7 +9,7 @@ import envs from 'src/config/app';
 import { AccountUserEntity } from '../entities/account-user.entity';
 import { LoginDto, ChangePasswordDto } from '../dto';
 import { ICurrentUser, IUser } from 'src/common/interfaces';
-import { DEFAULT_USER } from '../constants';
+import { DEFAULT_USER } from 'src/common/constants';
 import { responseHandler } from 'src/common/utils';
 
 @Injectable()
@@ -30,8 +30,8 @@ export class AccountUserService {
     return compareSync(received, saved);
   }
 
-  private generateToken(email: string): string {
-    return sign({ email }, envs.authSecret, { expiresIn: '7d' });
+  private generateToken(email: string, id: string): string {
+    return sign({ email, id }, envs.authSecret, { expiresIn: '7d' });
   }
 
   private async findUserByEmail(email: string): Promise<IUser | null> {
@@ -76,7 +76,7 @@ export class AccountUserService {
       const userData = { email, password: this.generatePassword(), invitedBy };
       const user = this.accountUserRepo.create(userData);
       await validateOrReject(user);
-      user.save();
+      await user.save();
       this.sendInvitation(user);
     } catch (error) {
       throw new Error(`Could not create default user: ${error}`);
@@ -90,7 +90,7 @@ export class AccountUserService {
       return responseHandler(false, 'Login error. Try again.');
     }
 
-    return responseHandler(true, 'Login Success.', { token: this.generateToken(user.email), user });
+    return responseHandler(true, 'Login Success.', { token: this.generateToken(user.email, user.id), user });
   }
 
   async changePassword(data: ChangePasswordDto, currentUser: ICurrentUser) {
@@ -102,9 +102,9 @@ export class AccountUserService {
 
     user.password = data.newPassword;
     user.defaultPasswordChanged = true;
-    user.save();
+    await user.save();
 
-    return responseHandler(true, 'Password changed successfully', { token: this.generateToken(user.email) });
+    return responseHandler(true, 'Password changed successfully', { token: this.generateToken(user.email, user.id) });
   }
 
   async addAccountUser(email: string, currentUser: ICurrentUser) {

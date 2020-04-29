@@ -1,4 +1,4 @@
-import { Resolver, Query, Args } from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 
 import { AccountUserEntity } from '../entities/account-user.entity';
@@ -11,30 +11,30 @@ import { MessageStatusDto } from 'src/common/dto';
 
 @Resolver(() => AccountUserEntity)
 export class AccountUserResolver {
-  constructor(private acountService: AccountUserService) {}
+  constructor(private accountService: AccountUserService) {}
 
   @Query(() => LoginResponse)
   async accountUserlogin(@Args('loginData', { type: () => LoginDto }) loginData: LoginDto) {
-    return this.acountService.accountUserlogin(loginData);
+    return this.accountService.accountUserlogin(loginData);
   }
 
-  @Query(() => ChangePasswordResponse)
+  @Mutation(() => ChangePasswordResponse)
   @UseGuards(LoggedInGuard)
   async changePassword(
     @Args('changePasswordData', { type: () => ChangePasswordDto })
     changePasswordData: ChangePasswordDto,
     @CurrentUser() currentUser: ICurrentUser,
   ) {
-    return this.acountService.changePassword(changePasswordData, currentUser);
+    return this.accountService.changePassword(changePasswordData, currentUser);
   }
 
-  @Query(() => MessageStatusDto)
+  @Mutation(() => MessageStatusDto)
   @UseGuards(LoggedInGuard)
   async addAccountUser(
     @Args('email')
     email: string,
     @CurrentUser() currentUser: ICurrentUser,
   ) {
-    return this.acountService.addAccountUser(email, currentUser);
+    return this.accountService.addAccountUser(email, currentUser);
   }
 }
