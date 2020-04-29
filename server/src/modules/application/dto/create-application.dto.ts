@@ -1,5 +1,5 @@
 import { InputType, Field, ObjectType } from '@nestjs/graphql';
-import { MessageStatusDto } from '../../../common/dto';
+import { MessageStatusDto } from 'src/common/dto';
 import { ApplicationEntity } from '../entities/application.entity';
 
 @InputType()

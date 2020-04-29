@@ -3,11 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { validateOrReject } from 'class-validator';
 
-import envs from '../../../config/app';
+import envs from 'src/config/app';
 import { ApplicationEntity } from '../entities/application.entity';
-import { responseHandler } from '../../../common/utils';
+import { responseHandler } from 'src/common/utils';
 import { CreateApplicationInput } from '../dto';
-import { ICurrentUser } from '../../../common/interfaces';
+import { ICurrentUser } from 'src/common/interfaces';
 
 @Injectable()
 export class ApplicationService {
