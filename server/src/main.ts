@@ -5,13 +5,7 @@ import * as rateLimit from 'express-rate-limit';
 import { AppModule } from './app.module';
 import envs from './config/app';
 
-
 async function bootstrap() {
-  const logLevels = ['log', 'error'];
-  if (!envs.isProduction) {
-    logLevels.push('warn', 'debug');
-  }
-
   const app = await NestFactory.create(AppModule, {
     cors: true,
   });

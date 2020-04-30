@@ -35,7 +35,7 @@ export class ApplicationEntity extends BaseEntity {
     () => RequestURLEntity,
     requestUrl => requestUrl.application,
     {
-      cascade: ['insert'],
+      cascade: ['insert', 'update'],
     },
   )
   requestUrls: RequestURLEntity[];

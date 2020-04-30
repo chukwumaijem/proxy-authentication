@@ -13,12 +13,12 @@ export class CreateApplicationInput {
 
 @ObjectType()
 class ApplicationData {
-  @Field(() => ApplicationEntity)
+  @Field(() => ApplicationEntity, { nullable: true })
   application: ApplicationEntity;
 }
 
 @ObjectType()
-export class CreateApplicationResponse extends MessageStatusDto {
+export class ApplicationResponseDto extends MessageStatusDto {
   @Field({ nullable: true })
   data: ApplicationData;
 }
